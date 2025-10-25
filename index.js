@@ -17,7 +17,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
   client.user.setPresence({
-    activities: [{ name: "Assigning Roles", type: 0 }], // "Playing Assigning Roles"
+    activities: [{ name: "Assisting TMN", type: 0 }], // "Assigning Roles"
     status: "online",
   });
 });
@@ -26,17 +26,17 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 // Map of short role names to their Discord role IDs
 const ROLE_MAP = {
-  vip: "ROLE_ID_1",
-  booster: "ROLE_ID_2",
-  mod: "ROLE_ID_3",
-  helper: "ROLE_ID_4",
+group1: "1431317597147627550",
+group2: "1431317878266662912",
+group3: "1431573059017642016",
+group4: "1431573136150892645",
 };
 
-// Route: /claim?role=vip
+// Route: /claim?role=groupx
 app.get("/claim", (req, res) => {
   const roleKey = req.query.role;
   if (!roleKey || !ROLE_MAP[roleKey]) {
-    return res.redirect("https://yourmainsite.com/discord-error");
+    return res.redirect("https://www.tmn2010.net/authenticated/news.aspx");
   }
 
   // Create a temporary session ID to store role choice
@@ -60,7 +60,7 @@ app.get("/callback", async (req, res) => {
   roleSessions.delete(state);
 
   if (!code || !role || !ROLE_MAP[role]) {
-    return res.redirect("https://yourmainsite.com/discord-error");
+    return res.redirect("https://www.tmn2010.net/authenticated/news.aspx");
   }
 
   try {
