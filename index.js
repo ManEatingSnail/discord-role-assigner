@@ -26,10 +26,10 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 // Map of short role names to their Discord role IDs
 const ROLE_MAP = {
-Group1: "1431317597147627550",
-Group2: "1431317878266662912",
-Group3: "1431573059017642016",
-Group4: "1431573136150892645",
+group1: "1431317597147627550",
+group2: "1431317878266662912",
+group3: "1431573059017642016",
+group4: "1431573136150892645",
 };
 
 // Route: /claim?role=vip
