@@ -22,7 +22,6 @@ client.once("ready", () => {
 client.login(process.env.DISCORD_BOT_TOKEN);
 import express from "express";
 import axios from "axios";
-import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
