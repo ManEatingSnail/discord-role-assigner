@@ -1,0 +1,19 @@
+{
+  "name": "discord-role-assigner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "discord.js": "^14.24.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
