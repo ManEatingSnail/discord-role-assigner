@@ -26,17 +26,17 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 // Map of short role names to their Discord role IDs
 const ROLE_MAP = {
-group1: "1431317597147627550",
-group2: "1431317878266662912",
-group3: "1431573059017642016",
-group4: "1431573136150892645",
+  vip: "ROLE_ID_1",
+  booster: "ROLE_ID_2",
+  mod: "ROLE_ID_3",
+  helper: "ROLE_ID_4",
 };
 
 // Route: /claim?role=vip
 app.get("/claim", (req, res) => {
   const roleKey = req.query.role;
   if (!roleKey || !ROLE_MAP[roleKey]) {
-    return res.send("❌ Invalid or missing role parameter.");
+    return res.redirect("https://yourmainsite.com/discord-error");
   }
 
   // Create a temporary session ID to store role choice
@@ -57,10 +57,10 @@ app.get("/claim", (req, res) => {
 app.get("/callback", async (req, res) => {
   const { code, state } = req.query;
   const role = roleSessions.get(state);
-  roleSessions.delete(state); // Clean up the session
+  roleSessions.delete(state);
 
   if (!code || !role || !ROLE_MAP[role]) {
-    return res.send("❌ Invalid request or missing role.");
+    return res.redirect("https://yourmainsite.com/discord-error");
   }
 
   try {
@@ -72,7 +72,7 @@ app.get("/callback", async (req, res) => {
         client_secret: process.env.DISCORD_CLIENT_SECRET,
         grant_type: "authorization_code",
         code,
-        redirect_uri: process.env.DISCORD_REDIRECT_URI, // No ?role here anymore!
+        redirect_uri: process.env.DISCORD_REDIRECT_URI,
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
@@ -86,30 +86,22 @@ app.get("/callback", async (req, res) => {
 
     const user = userResponse.data;
 
-    // Add the role using the bot token
+    // Assign the role
     const roleId = ROLE_MAP[role];
     await axios.put(
       `https://discord.com/api/v10/guilds/${process.env.GUILD_ID}/members/${user.id}/roles/${roleId}`,
       {},
-      {
-        headers: {
-          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-        },
-      }
+      { headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` } }
     );
 
-    res.send(
-      `<h2>✅ ${user.username} has been given the <strong>${role.toUpperCase()}</strong> role!</h2>`
+    // ✅ Redirect back to your main site with role info
+    return res.redirect(
+      `https://www.tmn2010.net/authenticated/news.aspx`
     );
   } catch (err) {
     console.error(err.response?.data || err.message);
-    if (err.response?.data?.error === "invalid_grant") {
-      res.send(
-        "⚠️ This link has expired or was already used. Please go back and start from the claim page."
-      );
-    } else {
-      res.send("❌ Something went wrong assigning the role.");
-    }
+    // ❌ Redirect to error page
+    return res.redirect("https://www.tmn2010.net/authenticated/news.aspx");
   }
 });
 
