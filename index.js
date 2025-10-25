@@ -1,3 +1,25 @@
+import { Client, GatewayIntentBits } from "discord.js";
+import dotenv from "dotenv";
+dotenv.config();
+
+// Create a new Discord client
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds],
+});
+
+// When the bot successfully connects
+client.once("ready", () => {
+  console.log(`✅ Logged in as ${client.user.tag}`);
+
+  // Optional: Set a custom status (e.g., "Assigning Roles")
+  client.user.setPresence({
+    activities: [{ name: "Assigning Roles", type: 0 }], // type: 0 = Playing
+    status: "online",
+  });
+});
+
+// Log in the bot
+client.login(process.env.DISCORD_BOT_TOKEN);
 import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
