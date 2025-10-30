@@ -26,10 +26,10 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 
 // Map of short role names to their Discord role IDs
 const ROLE_MAP = {
-group1: "1431317597147627550",
-group2: "1431317878266662912",
-group3: "1431573059017642016",
-group4: "1431573136150892645",
+y0fqjw7z8xtjnxim: "1433509967406563348",
+mykswhcbx2ktrx35: "1433510567204884636",
+kmvaz8uhsf0nq1w0: "1433510641892720721",
+ecw919dwshyby5k3: "1433510695093403809",
 };
 
 // Route: /claim?role=groupx
